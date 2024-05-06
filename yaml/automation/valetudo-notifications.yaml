@@ -71,6 +71,10 @@ trigger:
     entity_id: !input vacuum
     from: cleaning
     to: returning
+    for:
+      hours: 0
+      minutes: 3
+      seconds: 0
     id: cleaning_finished
     variables:
       msg_type: success_msg
