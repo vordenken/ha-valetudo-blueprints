@@ -37,6 +37,11 @@ blueprint:
         selector:
           text:
             type: url
+    vacuum_name:
+        name: Vacuum name
+        description: This name gets shown in notifications
+        selector:
+          text:
     notify_device:
         name: Notification Device(s)
         description: The notified device(s).
@@ -62,6 +67,7 @@ blueprint:
 trigger_variables:
   rendered_map_sensor: !input rendered_map
   error_message_sensor: !input error_message
+  vacuum_name: !input vacuum_name
   notify_devices: !input notify_device
   group_target: !input notify_group
   language: !input language
@@ -103,12 +109,12 @@ condition:
 variables:
   strings:
     English:
-      title: Vacuum
+      title: !input vacuum_name
       success_msg: "Cleaning task succeeded at {{ now().strftime('%-H:%M') }}."
       error_msg: "The robot has encountered an issue: {{ states( error_message_sensor ) }}"
       default_msg: "Everything is working fine."
     German:
-      title: Staubsauger
+      title: !input vacuum_name
       success_msg: "Die Reinigung wurde um {{ now().strftime('%-H:%M') }} Uhr erfolgreich abgeschlossen."
       error_msg: "Der Staubsauger hat ein Problem: {{ states( error_message_sensor ) }}"
       default_msg: Alles gut.
