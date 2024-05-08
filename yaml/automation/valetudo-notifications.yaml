@@ -14,14 +14,12 @@ blueprint:
                 domain: vacuum
                 integration: mqtt
                 multiple: false
-    rendered_map:
-        name: Rendered Map
-        description: The vacuum map rendered as a PNG image.
+    map_image_path:
+        name: Map Image Path
+        description: path to the map image (Use with HACS valetudo_vacuum_camera and enable png export)
+        default: '/local/snapshot_CHANGEME.png'
         selector:
-            entity:
-                domain: camera
-                integration: mqtt
-                multiple: false
+          text:
     error_message:
         name: Error Message
         description: The sensor containing the last error message.
@@ -66,7 +64,7 @@ blueprint:
             - German
 
 trigger_variables:
-  rendered_map_sensor: !input rendered_map
+  map_image_path: !input map_image_path
   error_message_sensor: !input error_message
   vacuum_name: !input vacuum_name
   notify_devices: !input notify_device
@@ -134,7 +132,7 @@ variables:
   title: "{{ strings[language]['title'] }}"
   message: "{{ strings[language][msg_type] | default(strings[language]['default_msg']) }}"
   data:
-    entity_id: "{{ rendered_map_sensor | default(none) }}"
+    image: !input map_image_path
     priority: high
     # iOS URL
     url: !input dashboard_url
