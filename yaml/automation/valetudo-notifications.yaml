@@ -74,8 +74,8 @@ trigger_variables:
 trigger:
   - platform: state
     entity_id: !input vacuum
-    from: cleaning
-    to: returning
+    from: returning
+    to: docked
     for:
       hours: 0
       minutes: 3
