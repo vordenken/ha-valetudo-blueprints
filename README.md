@@ -38,6 +38,8 @@ Triggers the auto-empty dock.
 
 Sends notifications to your device (or devices) when the robot completes a cleaning task or encounters an error. Optionally, you can also provide your own dashboard URL for the notification.
 
+**Ticker Integration Support:** Instead of sending notifications directly to mobile devices, you can optionally use the [Ticker](https://github.com/analytix-energy-solutions/ticker) integration. When enabled, the blueprint calls `ticker.notify` with a configurable category, letting Ticker handle routing to the right people based on their subscription preferences. Install Ticker via HACS, create a category (e.g. "vacuum"), and enable the option in the blueprint.
+
 For the map image feature to be working you need to install this (preferably using HACS):
 https://github.com/sca075/valetudo_vacuum_camera
 and enable "export png snapshots".
