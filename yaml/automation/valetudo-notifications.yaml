@@ -53,6 +53,18 @@ blueprint:
       name: Notification Group
       description: "The name of the notification group to call. ('notify' for all devices)"
       default: ""
+    ticker_enabled:
+      name: Use Ticker Integration
+      description: "Enable to use the Ticker integration (https://github.com/analytix-energy-solutions/ticker) instead of direct device notifications."
+      default: false
+      selector:
+        boolean:
+    ticker_category:
+      name: Ticker Category
+      description: "The Ticker category to use for notifications (e.g. 'vacuum'). Only used when Ticker is enabled."
+      default: "vacuum"
+      selector:
+        text:
     language:
       name: Language
       description: The language used for the notifications.
@@ -69,6 +81,8 @@ trigger_variables:
   vacuum_name: !input vacuum_name
   notify_devices: !input notify_device
   group_target: !input notify_group
+  use_ticker: !input ticker_enabled
+  ticker_cat: !input ticker_category
   language: !input language
 
 trigger:
@@ -140,13 +154,25 @@ variables:
     clickAction: !input dashboard_url
 
 action:
-  - repeat:
-      for_each: "{{ notify_targets }}"
+  - choose:
+    - conditions:
+        - condition: template
+          value_template: "{{ use_ticker }}"
       sequence:
-      - service: "{{ repeat.item }}"
-        data:
-          title: "{{ title }}"
-          message: "{{ message }}"
-          data: "{{ data }}"
+        - service: ticker.notify
+          data:
+            category: "{{ ticker_cat }}"
+            title: "{{ title }}"
+            message: "{{ message }}"
+            data: "{{ data }}"
+    default:
+      - repeat:
+          for_each: "{{ notify_targets }}"
+          sequence:
+          - service: "{{ repeat.item }}"
+            data:
+              title: "{{ title }}"
+              message: "{{ message }}"
+              data: "{{ data }}"
 
 mode: queued
