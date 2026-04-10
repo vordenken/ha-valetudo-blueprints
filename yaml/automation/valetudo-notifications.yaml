@@ -146,16 +146,13 @@ condition:
 
 variables:
   vacuum_id: "{{ trigger.entity_id }}"
+  robot_idx: "{{ vacuum_entities.index(trigger.entity_id) if trigger.entity_id in vacuum_entities else 0 }}"
   vacuum_name: '{{ device_attr(vacuum_id, "name_by_user") or device_attr(vacuum_id, "name") }}'
-  error_message_sensor: >-
-    {%- set idx = vacuum_entities.index(trigger.entity_id) if trigger.entity_id in vacuum_entities else 0 -%}
-    {{ error_entities[idx] }}
+  error_message_sensor: "{{ error_entities[robot_idx] }}"
   rendered_map_sensor: >-
-    {%- set idx = vacuum_entities.index(trigger.entity_id) if trigger.entity_id in vacuum_entities else 0 -%}
-    {%- if rendered_map_entities | length > idx -%}{{ rendered_map_entities[idx] }}{%- endif -%}
+    {%- if rendered_map_entities | length > robot_idx -%}{{ rendered_map_entities[robot_idx] }}{%- endif -%}
   status_flag_sensor: >-
-    {%- set idx = vacuum_entities.index(trigger.entity_id) if trigger.entity_id in vacuum_entities else 0 -%}
-    {%- if status_flag_entities | length > idx -%}{{ status_flag_entities[idx] }}{%- endif -%}
+    {%- if status_flag_entities | length > robot_idx -%}{{ status_flag_entities[robot_idx] }}{%- endif -%}
   strings:
     English:
       title: "Vacuum {{ vacuum_name }}"
@@ -165,7 +162,7 @@ variables:
     French:
       title: "Aspirateur {{ vacuum_name }}"
       success_msg: "Nettoyage terminé à {{ now().strftime('%-H:%M') }}."
-      error_msg: "Le robot à rencontré une erreur: {{ states( error_message_sensor ) }}"
+      error_msg: "Le robot a rencontré une erreur: {{ states( error_message_sensor ) }}"
       default_msg: "Tout va bien"
     German:
       title: "Staubsauger {{ vacuum_name }}"
