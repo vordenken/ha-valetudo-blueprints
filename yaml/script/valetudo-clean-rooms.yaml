@@ -1,7 +1,7 @@
 blueprint:
   name: 'Valetudo: Clean Rooms'
   description: Starts selected room cleaning using Valetudo
-  source_url: https://github.com/mundschenk-at/ha-valetudo-blueprints/blob/main/yaml/script/valetudo-clean-rooms.yaml
+  source_url: https://github.com/vordenken/ha-valetudo-blueprints/blob/main/yaml/script/valetudo-clean-rooms.yaml
   domain: script
   homeassistant:
     min_version: 2022.6.0

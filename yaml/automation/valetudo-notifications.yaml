@@ -1,7 +1,7 @@
 blueprint:
   name: 'Valetudo: Notifications'
   description: Sends a notification after a successful clean-up run and on error.
-  source_url: https://github.com/mundschenk-at/ha-valetudo-blueprints/blob/main/yaml/automation/valetudo-notifications.yaml
+  source_url: https://github.com/vordenken/ha-valetudo-blueprints/blob/main/yaml/automation/valetudo-notifications.yaml
   domain: automation
   homeassistant:
     min_version: 2022.6.0
