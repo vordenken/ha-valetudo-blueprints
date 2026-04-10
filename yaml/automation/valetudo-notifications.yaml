@@ -213,7 +213,7 @@ action:
       - alias: "Wait for docking"
         wait_for_trigger:
           - platform: state
-            entity_id: "{{ vacuum_id }}"
+            entity_id: !input vacuum
             from: returning
             to: docked
             for:
@@ -222,6 +222,12 @@ action:
               seconds: 5
         timeout:
           minutes: 30
+      - if:
+          - alias: "Verify the correct robot docked"
+            condition: template
+            value_template: "{{ not is_state(vacuum_id, 'docked') }}"
+        then:
+          - stop: "A different robot docked; skip notification for this one"
       - if:
           - alias: "If cleaning is resumable"
             condition: template
