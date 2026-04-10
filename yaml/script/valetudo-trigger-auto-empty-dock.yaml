@@ -1,7 +1,7 @@
 blueprint:
   name: 'Valetudo: Trigger Auto-Empty Dock'
   description: Tells the auto-empty dock to do its thing.
-  source_url: https://github.com/mundschenk-at/ha-valetudo-blueprints/blob/main/yaml/script/valetudo-trigger-auto-empty-dock.yaml
+  source_url: https://github.com/vordenken/ha-valetudo-blueprints/blob/main/yaml/script/valetudo-trigger-auto-empty-dock.yaml
   domain: script
   homeassistant:
     min_version: 2022.6.0
